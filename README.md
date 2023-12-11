@@ -3,24 +3,27 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/bitcodesa/msegat.svg?style=flat-square)](https://packagist.org/packages/bitcodesa/msegat)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/bitcodesa/msegat/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/bitcodesa/msegat/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/bitcodesa/msegat.svg?style=flat-square)](https://packagist.org/packages/bitcodesa/msegat)
+## Laravel Msegat Notification Channel
 
-This package can be use to send SMS message using msegat.com provider.
+This package provides a Laravel notification channel for sending SMS messages using the msegat.com SMS provider.
 
 ## Installation
 
-You can install the package via composer:
+1. **Install the package:**
 
 ```bash
 composer require bitcodesa/msegat
 ```
 
-You can publish the config file with:
+2. **Publish the config file:**
 
 ```bash
 php artisan vendor:publish --tag="msegat-config"
 ```
 
-This is the contents of the published config file:
+3. **Configure the package:**
+
+Edit the published config file (`config/msegat.php`) with your Msegat credentials:
 
 ```php
 return [
@@ -30,26 +33,28 @@ return [
     "sender" => env("MSEGAT_SENDER", ""),
     "unicode" => env("MSEGAT_UNICODE", "UTF8"),
 ];
-
 ```
 
-## Setting up Msegat Service:
+4. **Configure Msegat service:**
 
-you have to get API Key, sender, and username from the provider you can get it by going to your dashboard at msegat.com.
-add the provided data into env file:
+* **Get your credentials:**
+    1. Create an account at msegat.com.
+    2. Go to your dashboard.
+    3. Obtain your API Key, Username, and Sender ID.
+* **Set environment variables:**
+    1. Open your `.env` file.
+    2. Add the following lines, replacing the placeholder values with your credentials:
 
 ```php
-//other env configuration
+# Msegat credentials
 MSEGAT_API_KEY="xxxxxxxxxxxxxxxxxxxxxxxxx"
 MSEGAT_USERNAME="BITCODE"
 MSEGAT_SENDER="BITCODE"
-//other env configuration
 ```
 
 ## Usage
 
-you can use channel by adding `BitcodeSa\Msegat\MsegatChannel::class` into `via()` method of you notification class.
-You need to add `toMsegat()` method which should return `MsegatMessage()` object.
+1. **Add the Msegat channel to your notification class:**
 
 ```php
 <?php
@@ -74,8 +79,8 @@ class Reservation extends Notification
     public function via(object $notifiable): array
     {
         return [
-                    //Other Channels
-                    MsegatChannel::class
+                    MsegatChannel::class,
+                    // Other notification channels
                 ];
     }
 
@@ -83,13 +88,20 @@ class Reservation extends Notification
     {
         return new MsegatMessage($this->reservation->title);
     }
-    //Other Channels and functions
+    // Other notification methods
 }
 ```
 
-### Notifiable Identifier:
-The main identifier for the notifiable model is `phone`, to change it you have to add
-`routeNotificationForMsegat()` to you notifiable model.
+2. **Send the notification:**
+
+```php
+$user = User::find(1);
+$user->notify(new Reservation($reservation));
+```
+
+## Notifiable Identifier
+
+By default, the Msegat notification channel uses the `phone` property on the notifiable model to identify the recipient. If your model uses a different attribute for phone numbers, you can override the default behavior by implementing the `routeNotificationForMsegat()` method on your notifiable model:
 
 ```php
 class User extends Authenticatable 
@@ -102,6 +114,13 @@ class User extends Authenticatable
     }
 }
 ```
+
+This instructs the package to use the `mobile` attribute instead of `phone` to find the recipient's phone number.
+
+## Additional Notes
+
+* The package supports unicode messages.
+* The package allows you to customize the sender name displayed on the recipient's phone.
 
 ## Changelog
 
