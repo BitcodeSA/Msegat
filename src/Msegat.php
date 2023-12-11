@@ -8,22 +8,18 @@ class Msegat
 {
     protected $api_url;
     protected $username;
-    protected $sender;
     protected $api_key;
-    protected $unicode;
     protected $request;
     protected $client;
     protected $numbers;
     protected MsegatMessage $message;
     protected $response;
 
-    public function __construct($username = null, $sender = null, $unicode = null)
+    public function __construct($username = null)
     {
         $this->setApiUrl();
         $this->setAuthentication();
         $this->setUsername($username);
-        $this->setSender($sender);
-        $this->setUnicode($unicode);
         $this->setClient();
     }
 
@@ -45,23 +41,6 @@ class Msegat
         return $this;
     }
 
-    public function setSender($sender = null)
-    {
-        if (!is_null($sender)) {
-            $this->sender = $sender;
-        } elseif (!is_null($this->message)) {
-            $this->sender = $this->message->sender;
-        } else {
-            $this->sender = config("msegat.sender");
-        }
-        return $this;
-    }
-
-    public function setUnicode($unicode = null)
-    {
-        $this->unicode = $unicode ?? config("msegat.unicode");
-    }
-
     public function setClient()
     {
         $this->client = Http::withHeaders([
@@ -73,10 +52,10 @@ class Msegat
     {
         $this->request = [
             "userName" => $this->username,
-            "userSender" => $this->sender,
+            "userSender" => $this->message->sender,
             "apiKey" => $this->api_key,
-            "msgEncoding" => $this->unicode,
             "numbers" => $this->numbers,
+            "msgEncoding" => $this->message->unicode,
             "msg" => $this->message->content,
             "lang" => $this->message->lang,
         ];
@@ -103,7 +82,6 @@ class Msegat
     {
         $this->setNumbers($numbers);
         $this->setMessage($message);
-        $this->setSender();
         return $this->sendRequest();
     }
 
