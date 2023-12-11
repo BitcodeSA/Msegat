@@ -13,7 +13,7 @@ class MsegatChannel
         $this->msegat = $msegat;
     }
 
-    public function send($notifiable, Notification $notification): void
+    public function send($notifiable, Notification $notification)
     {
         $recever = $notifiable->routeNotificationFor('msegat');
 
@@ -35,6 +35,6 @@ class MsegatChannel
             $message = new MsegatMessage($message);
         }
 
-        $this->msegat->sendMessage($recever, $message->content, $message->sender);
+        return $this->msegat->sendMessage($recever, $message);
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "bitcodesa/msegat",
     "description": "Notification Channel For Msegate msegat.com",
-    "version" : "1.0.0",
+    "version" : "1.0.1",
     "keywords": [
         "BitcodeSa",
         "laravel",

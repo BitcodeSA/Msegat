@@ -14,7 +14,7 @@ class Msegat
     protected $request;
     protected $client;
     protected $numbers;
-    protected $message;
+    protected MsegatMessage $message;
     protected $response;
 
     public function __construct($username = null, $sender = null, $unicode = null)
@@ -47,7 +47,13 @@ class Msegat
 
     public function setSender($sender = null)
     {
-        $this->sender = $sender ?? config("msegat.sender");
+        if (!is_null($sender)) {
+            $this->sender = $sender;
+        } elseif (!is_null($this->message)) {
+            $this->sender = $this->message->sender;
+        } else {
+            $this->sender = config("msegat.sender");
+        }
         return $this;
     }
 
@@ -71,7 +77,8 @@ class Msegat
             "apiKey" => $this->api_key,
             "msgEncoding" => $this->unicode,
             "numbers" => $this->numbers,
-            "msg" => $this->message,
+            "msg" => $this->message->content,
+            "lang" => $this->message->lang,
         ];
     }
 
@@ -86,17 +93,17 @@ class Msegat
         return $this;
     }
 
-    public function setMessage($message)
+    public function setMessage(MsegatMessage $message)
     {
-        $this->message = str_replace('<br>', ' ', $message);
+        $this->message = $message;
         return $this;
     }
 
-    public function sendMessage($numbers, $message, $sender = null)
+    public function sendMessage($numbers, MsegatMessage $message)
     {
         $this->setNumbers($numbers);
         $this->setMessage($message);
-        $this->setSender($sender);
+        $this->setSender();
         return $this->sendRequest();
     }
 
@@ -104,7 +111,7 @@ class Msegat
     {
         $this->setRequest();
 
-        $this->response = $this->client->post("", $this->request);
+        $this->response = $this->client->post("/".$this->message->type.".php", $this->request);
 
         return $this->response;
     }
