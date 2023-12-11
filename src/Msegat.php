@@ -111,6 +111,11 @@ class Msegat
     {
         $this->setRequest();
 
+        if (config("msegat.log")) {
+            logger(http_build_query($this->request));
+            return;
+        }
+
         $this->response = $this->client->post("/".$this->message->type.".php", $this->request);
 
         return $this->response;

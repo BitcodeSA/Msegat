@@ -7,4 +7,5 @@ return [
     "username" => env("MSEGAT_USERNAME", ""),
     "sender" => env("MSEGAT_SENDER", ""),
     "unicode" => env("MSEGAT_UNICODE", "UTF8"),
+    "log" => env("MSEGAT_LOG", false),
 ];
