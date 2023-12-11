@@ -68,7 +68,7 @@ class Msegat
         $this->request = [
             "userName" => $this->username,
             "userSender" => $this->sender,
-            "apiKey" => $this->password,
+            "apiKey" => $this->api_key,
             "msgEncoding" => $this->unicode,
             "numbers" => $this->numbers,
             "msg" => $this->message,
