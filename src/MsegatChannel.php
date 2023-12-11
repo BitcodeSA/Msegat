@@ -22,6 +22,10 @@ class MsegatChannel
         }
 
         if (!$recever) {
+            $recever = $notifiable->phone;
+        }
+
+        if (!$recever) {
             return;
         }
 
