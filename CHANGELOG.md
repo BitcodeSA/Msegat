@@ -8,3 +8,4 @@
   as `MSEGAT_LOG = true`.
 - relocate `unicode` and `sender` from `Msegat` class into `MsegatMessage` object.
 - you can specify the time to send the message by calling `timeToExec("YYYY-MM-DD HH:i:ss")` method.
+- request balance check from you account.

@@ -29,7 +29,6 @@ class MsegatBalance extends Msegat
     {
         $this->setRequest();
         $this->response = $this->client->post("/".$this->end_point, $this->request);
-        logger($this->response);
         return $this->response;
     }
 }
