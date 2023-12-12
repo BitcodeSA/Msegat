@@ -102,7 +102,7 @@ class Msegat
             logger(http_build_query($this->request));
             return;
         }
-
+        logger("/".$this->message->type.".php");
         $this->response = $this->client->post("/".$this->message->type.".php", $this->request);
 
         return $this->response;
