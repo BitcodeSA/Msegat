@@ -39,11 +39,8 @@ class MsegatVerifyOtp extends Msegat
             "userName" => $this->username,
             "userSender" => $this->sender,
             "apiKey" => $this->api_key,
-            "msgEncoding" => $this->unicode,
-            "numbers" => $this->numbers,
             "code" => $this->code,
             "id" => $this->id,
-            "lang" => $this->message->lang,
         ];
     }
 
