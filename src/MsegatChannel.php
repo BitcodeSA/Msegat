@@ -35,6 +35,8 @@ class MsegatChannel
             $message = new MsegatMessage($message);
         }
 
-        return $this->msegat->sendMessage($recever, $message);
+        $result = $this->msegat->sendMessage($recever, $message);
+        logger($result);
+        return $result;
     }
 }
