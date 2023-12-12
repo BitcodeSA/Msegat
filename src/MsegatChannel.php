@@ -3,6 +3,7 @@
 namespace BitcodeSa\Msegat;
 
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Cache;
 
 class MsegatChannel
 {
@@ -36,7 +37,7 @@ class MsegatChannel
         }
         $this->msegat->setNotifiable($notifiable);
         $result = $this->msegat->sendMessage($recever, $message);
-
+        logger(Cache::get(get_class(class_basename($this->notifiable)).":".$this->notifiable->id));
         return $result;
     }
 }

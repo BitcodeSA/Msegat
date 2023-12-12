@@ -115,7 +115,7 @@ class Msegat
         $this->response = $this->client->post("/".$this->message->type.".php", $this->request);
 
         if ($this->message->type == MsegatMessage::TYPE_OTP) {
-            $this->setOtpId($this->response->json("id"));
+            $this->setOtpId($this->response->json("message"));
         }
 
         return $this->response;
