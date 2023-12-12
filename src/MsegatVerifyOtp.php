@@ -10,6 +10,7 @@ class MsegatVerifyOtp extends Msegat
     {
         $this->setApiUrl();
         $this->setAuthentication();
+        $this->setSender();
         $this->setUsername($username);
         $this->setClient();
     }
