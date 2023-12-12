@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\Cache;
 
 class MsegatVerifyOtp extends Msegat
 {
+    public function __construct($username = null)
+    {
+        $this->setApiUrl();
+        $this->setAuthentication();
+        $this->setUsername($username);
+        $this->setClient();
+    }
+
     public $code;
     public $id;
 
@@ -17,6 +25,12 @@ class MsegatVerifyOtp extends Msegat
     public function setId($notifiable)
     {
         $this->id = Cache::get(class_basename(get_class($notifiable)).":".$notifiable->id);
+    }
+
+    public function setSender()
+    {
+        $this->sender = config("msegat.sender");
+        return $this;
     }
 
     public function setRequest()
