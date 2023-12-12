@@ -56,9 +56,18 @@ class Msegat
             "apiKey" => $this->api_key,
             "numbers" => $this->numbers,
             "msgEncoding" => $this->message->unicode,
-            "msg" => $this->message->content,
-            "lang" => $this->message->lang,
         ];
+
+        if ($this->message->type == MsegatMessage::TYPE_SMS) {
+            $this->request["msg"] = $this->message->content;
+        } elseif ($this->message->type == MsegatMessage::TYPE_OTP) {
+            $this->request["lang"] = $this->message->lang;
+        }
+
+        if ($this->message->timeToSend != "now") {
+            $this->request["timeToSend"] = $this->message->time_to_send;
+            $this->request["exactTime"] = $this->message->time_to_exec;
+        }
     }
 
     public function setNumbers($numbers)
