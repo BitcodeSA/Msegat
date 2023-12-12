@@ -2,6 +2,8 @@
 
 namespace BitcodeSa\Msegat;
 
+use Illuminate\Support\Facades\Cache;
+
 class MsegatVerifyOtp extends Msegat
 {
     public $code;
@@ -12,9 +14,9 @@ class MsegatVerifyOtp extends Msegat
         $this->code = $code;
     }
 
-    public function setId($id)
+    public function setId($notifiable)
     {
-        $this->id = $id;
+        $this->id = Cache::get(class_basename(get_class($notifiable)).":".$notifiable->id);
     }
 
     public function setRequest()
@@ -30,10 +32,12 @@ class MsegatVerifyOtp extends Msegat
             "lang" => $this->message->lang,
         ];
     }
-    public function validate($id, $code): bool
+
+    public function validate($notifiable, $code): bool
     {
-        $this->setId($id);
+        $this->setId($notifiable);
         $this->setCode($code);
+        $this->setRequest();
         $this->response = $this->client->post("/verifyOTPCode.php", $this->request);
 
         return $this->response->json("code") == 1;
