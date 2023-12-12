@@ -64,7 +64,7 @@ class Msegat
             $this->request["lang"] = $this->message->lang;
         }
 
-        if ($this->message->timeToSend != "now") {
+        if ($this->message->time_to_send != "now") {
             $this->request["timeToSend"] = $this->message->time_to_send;
             $this->request["exactTime"] = $this->message->time_to_exec;
         }

@@ -98,7 +98,7 @@ class MsegatMessage
     public function timeToExec($timestamp): self
     {
         $this->timeToSend('later');
-        $time_to_exec = $timestamp;
+        $this->time_to_exec = $timestamp;
         return $this;
     }
 }
