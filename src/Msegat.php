@@ -61,6 +61,7 @@ class Msegat
         if ($this->message->type == MsegatMessage::TYPE_SMS) {
             $this->request["msg"] = $this->message->content;
         } elseif ($this->message->type == MsegatMessage::TYPE_OTP) {
+            $this->request["msg"] = $this->message->lang;
             $this->request["lang"] = $this->message->lang;
         }
 
