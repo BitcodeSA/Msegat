@@ -123,6 +123,6 @@ class Msegat
 
     public function setOtpId($id)
     {
-        Cache::put(get_class(class_basename($this->notifiable)).":".$this->notifiable->id, $id, now()->addMinutes(5));
+        Cache::put(class_basename(get_class($this->notifiable)).":".$this->notifiable->id, $id, now()->addMinutes(5));
     }
 }
