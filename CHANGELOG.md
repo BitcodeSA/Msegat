@@ -1,6 +1,6 @@
 # Changelog
 
-### Version 1.0.1:
+### Version 2.0.0:
 
 - Add ability to request otp.
 - update to the Msegat class structure.
