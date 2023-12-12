@@ -70,6 +70,7 @@ class Msegat
             $this->request["msg"] = $this->message->content;
         } elseif ($this->message->type == MsegatMessage::TYPE_OTP) {
             $this->request["lang"] = $this->message->lang;
+            $this->request["msg"] = $this->message->lang;
         }
 
         if ($this->message->time_to_send != "now") {
