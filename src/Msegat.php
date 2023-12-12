@@ -2,6 +2,7 @@
 
 namespace BitcodeSa\Msegat;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class Msegat
@@ -14,6 +15,7 @@ class Msegat
     protected $numbers;
     protected MsegatMessage $message;
     protected $response;
+    protected $notifiable;
 
     public function __construct($username = null)
     {
@@ -38,6 +40,12 @@ class Msegat
     public function setUsername($username = null)
     {
         $this->username = $username ?? config("msegat.username");
+        return $this;
+    }
+
+    public function setNotifiable($notifiable): self
+    {
+        $this->notifiable = $notifiable;
         return $this;
     }
 
@@ -102,9 +110,18 @@ class Msegat
             logger(http_build_query($this->request));
             return;
         }
-        logger("/".$this->message->type.".php");
+
         $this->response = $this->client->post("/".$this->message->type.".php", $this->request);
 
+        if ($this->message->type == MsegatMessage::TYPE_OTP) {
+            $this->setOtpId($this->response->json("id"));
+        }
+
         return $this->response;
+    }
+
+    public function setOtpId($id)
+    {
+        Cache::put(get_class(class_basename($this->notifiable)).":".$this->notifiable->id, $id, now()->addMinutes(5));
     }
 }

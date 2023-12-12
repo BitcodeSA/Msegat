@@ -3,6 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/bitcodesa/msegat.svg?style=flat-square)](https://packagist.org/packages/bitcodesa/msegat)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/bitcodesa/msegat/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/bitcodesa/msegat/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/bitcodesa/msegat.svg?style=flat-square)](https://packagist.org/packages/bitcodesa/msegat)
+
 ## Laravel Msegat Notification Channel
 
 This package provides a Laravel notification channel for sending SMS messages using the msegat.com SMS provider.
@@ -92,16 +93,64 @@ class Reservation extends Notification
 }
 ```
 
-2. **Send the notification:**
+Available Method for `MsegatMessage` object:
+
+- `timeToExec("YYYY-MM-DD HH:i:SS")` allow you to specify the time that the message should be sent.
+- `unicode("UTF8")` specify unicode for the message by default it is ***"UTF8"***.
+- `type("TYPE_SMS")` specify message type you can choose between SMS or OTP.
+- `sender($sender)` specify sender name.
+- `lang("ar")` specify OTP language by defualt it is ***"ar"***
+
+2. **Send the sms notification:**
 
 ```php
 $user = User::find(1);
 $user->notify(new Reservation($reservation));
 ```
 
+3. **Send otp notification:**
+
+***NOTE:This feature not working from the source `msegat.com`***
+
+```php
+$user = User::find(1);
+$user->notify(new SendOtp($reservation));
+```
+`SendOtp` Class:
+
+```php
+class SendOtp extends Notification
+{
+    use Queueable;
+
+    public function __construct()
+    {
+        //
+    }
+
+    public function via(object $notifiable): array
+    {
+        return [MsegatChannel::class];
+    }
+
+    public function toMsegat()
+    {
+        return (new MsegatMessage())
+            ->type(MsegatMessage::TYPE_OTP)
+            ->lang("en");
+    }
+}
+```
+***NOTE:This feature not working from the source `msegat.com`***
+
+Validate OTP:
+to validate OTP 
+
 ## Notifiable Identifier
 
-By default, the Msegat notification channel uses the `phone` property on the notifiable model to identify the recipient. If your model uses a different attribute for phone numbers, you can override the default behavior by implementing the `routeNotificationForMsegat()` method on your notifiable model:
+By default, the Msegat notification channel uses the `phone` property on the notifiable model to identify the recipient.
+If your model uses a different attribute for phone numbers, you can override the default behavior by implementing
+the `routeNotificationForMsegat()` method on your notifiable model:
 
 ```php
 class User extends Authenticatable 

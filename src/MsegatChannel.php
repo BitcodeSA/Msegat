@@ -34,9 +34,9 @@ class MsegatChannel
         if (is_string($message)) {
             $message = new MsegatMessage($message);
         }
-
+        $this->msegat->setNotifiable($notifiable);
         $result = $this->msegat->sendMessage($recever, $message);
-        logger($result);
+
         return $result;
     }
 }
