@@ -116,6 +116,7 @@ $user->notify(new Reservation($reservation));
 $user = User::find(1);
 $user->notify(new SendOtp($reservation));
 ```
+
 `SendOtp` Class:
 
 ```php
@@ -141,10 +142,18 @@ class SendOtp extends Notification
     }
 }
 ```
+
 ***NOTE:This feature not working from the source `msegat.com`***
 
-Validate OTP:
-to validate OTP 
+### **Validate OTP:**
+
+```php
+$user = \App\Models\User::first();
+$otp = new \BitcodeSa\Msegat\MsegatVerifyOtp();
+$otp->validate($user, $code);
+```
+
+***NOTE:This feature not working from the source `msegat.com`***
 
 ## Notifiable Identifier
 
