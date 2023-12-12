@@ -37,7 +37,7 @@ class MsegatChannel
         }
         $this->msegat->setNotifiable($notifiable);
         $result = $this->msegat->sendMessage($recever, $message);
-        logger(Cache::get(get_class(class_basename($this->notifiable)).":".$this->notifiable->id));
+        logger(Cache::get(get_class(class_basename($notifiable)).":".$notifiable->id));
         return $result;
     }
 }
