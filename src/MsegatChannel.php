@@ -19,11 +19,11 @@ class MsegatChannel
         $recever = $notifiable->routeNotificationFor('msegat');
 
         if (!$recever) {
-            $notifiable->routeNotificationFor(MsegatChannel::class);
+            $recever = $notifiable->routeNotificationFor(MsegatChannel::class);
         }
 
         if (!$recever) {
-            $recever = $notifiable->phone;
+            $recever = $notifiable->{config("msegat.receiver")};
         }
 
         if (!$recever) {
@@ -37,7 +37,6 @@ class MsegatChannel
         }
         $this->msegat->setNotifiable($notifiable);
         $result = $this->msegat->sendMessage($recever, $message);
-        logger(Cache::get(class_basename(get_class($notifiable)).":".$notifiable->id));
         return $result;
     }
 }

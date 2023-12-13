@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 2.0.1:
+- remove unused code (logger,command,view,migration).
+- fix :bug: in ```MsegatChannel.php```.
+- add recevier key name to config.php .
+
 ### Version 2.0.0:
 
 - Add ability to request otp.
