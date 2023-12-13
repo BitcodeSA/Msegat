@@ -7,5 +7,6 @@ return [
     "username" => env("MSEGAT_USERNAME", ""),
     "sender" => env("MSEGAT_SENDER", ""),
     "unicode" => env("MSEGAT_UNICODE", "UTF8"),
+    "receiver" => env("MSEGAT_RECEIVER","phone"),
     "log" => env("MSEGAT_LOG", false),
 ];

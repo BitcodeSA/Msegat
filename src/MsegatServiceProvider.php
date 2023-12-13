@@ -4,7 +4,6 @@ namespace BitcodeSa\Msegat;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use BitcodeSa\Msegat\Commands\MsegatCommand;
 
 class MsegatServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +16,6 @@ class MsegatServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('msegat')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_msegat_table')
-            ->hasCommand(MsegatCommand::class);
+            ->hasConfigFile();
     }
 }
