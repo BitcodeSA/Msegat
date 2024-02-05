@@ -16,6 +16,7 @@ class MsegatServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('msegat')
-            ->hasConfigFile();
+            ->hasConfigFile()
+            ->hasMigration('create_message_table');
     }
 }

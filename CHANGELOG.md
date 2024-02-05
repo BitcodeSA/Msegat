@@ -1,4 +1,8 @@
 # Changelog
+### Version 2.0.2
+- add message model to log message send.
+- you can link message with any notifiable model to get its messages.
+
 
 ### Version 2.0.1:
 - remove unused code (logger,command,view,migration).
