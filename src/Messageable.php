@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Messageable
 {
-    public function messageable(): MorphMany
+    public function messages(): MorphMany
     {
         return $this->morphMany(Message::class);
     }

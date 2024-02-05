@@ -53,6 +53,34 @@ MSEGAT_USERNAME="BITCODE"
 MSEGAT_SENDER="BITCODE"
 ```
 
+5. **Use Messages Log:**
+   if you went to use messages log that create recorde for `Message` model, you have to publish the table:
+
+```bash
+php artisan vendor:publish --tag="msegat-migrate"
+```
+
+make sure that you allow the creation through:
+
+```php
+MSEGAT_MESSAGES_LOG=true
+```
+
+you can use `Messageable` trait to get any register that linked to any notifiable model:
+
+```php
+class User extends Authenticatable 
+{
+    use \BitcodeSa\Msegat\Messageable;
+}
+```
+
+then you can get messages through:
+
+```php
+$user->messages
+```
+
 ## Usage
 
 1. **Add the Msegat channel to your notification class:**
