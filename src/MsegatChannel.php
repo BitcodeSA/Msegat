@@ -50,7 +50,7 @@ class MsegatChannel
     public function createMessage($response, $notifiable, $message, $recever)
     {
         if (config("msegat.model.allow_messages_log")) {
-            if ($response instanceof Response::class) {
+            if ($response instanceof Response) {
                 if ($response->successful()) {
                     Message::create([
                         "phone" => $recever,
