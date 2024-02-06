@@ -57,7 +57,7 @@ MSEGAT_SENDER="BITCODE"
    if you went to use messages log that create recorde for `Message` model, you have to publish the table:
 
 ```bash
-php artisan vendor:publish --tag="msegat-migrate"
+php artisan vendor:publish --tag="msegat-migrations"
 ```
 
 make sure that you allow the creation through:
