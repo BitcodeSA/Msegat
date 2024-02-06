@@ -3,6 +3,7 @@
 namespace BitcodeSa\Msegat;
 
 use BitcodeSa\Msegat\Models\Message;
+use Illuminate\Http\Client\Response;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 
@@ -41,23 +42,25 @@ class MsegatChannel
 
         $result = $this->msegat->sendMessage($recever, $message);
 
-        $this->createMessage($result, $notifiable, $message);
+        $this->createMessage($result, $notifiable, $message, $recever);
 
         return $result;
     }
 
-    public function createMessage($response, $notifiable, $message)
+    public function createMessage($response, $notifiable, $message, $recever)
     {
         if (config("msegat.model.allow_messages_log")) {
-            if ($response->successful()) {
-                Message::create([
-                    "phone" => $notifiable->{config("msegat.receiver")},
-                    "message" => $message->content,
-                    "messageable_type" => get_class($notifiable),
-                    "messageable_id" => $notifiable->{$notifiable->getKeyName()},
-                    "response_code" => $response->json("code", 0),
-                    "response_message" => $response->json("message", "No Response")
-                ]);
+            if ($response instanceof Response::class) {
+                if ($response->successful()) {
+                    Message::create([
+                        "phone" => $recever,
+                        "message" => $message->content,
+                        "messageable_type" => get_class($notifiable),
+                        "messageable_id" => $notifiable->{$notifiable->getKeyName()},
+                        "response_code" => $response->json("code", 0),
+                        "response_message" => $response->json("message", "No Response")
+                    ]);
+                }
             }
         }
     }
