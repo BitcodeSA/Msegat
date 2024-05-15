@@ -21,6 +21,10 @@
 - you can specify the time to send the message by calling `timeToExec("YYYY-MM-DD HH:i:ss")` method.
 - request balance check from you account.
 
+## 2.1.1 - 2024-05-15
+
+**Full Changelog**: https://github.com/BitcodeSA/Msegat/compare/2.1.0...2.1.1
+
 ## 2.1.0 - 2024-02-06
 
 2.1.0
