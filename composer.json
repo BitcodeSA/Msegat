@@ -1,7 +1,7 @@
 {
     "name": "bitcodesa/msegat",
     "description": "Notification Channel For Msegate msegat.com",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "keywords": [
         "BitcodeSa",
         "laravel",
@@ -20,7 +20,7 @@
         "php": "^8.2|^8.1",
         "guzzlehttp/guzzle": "^7.2",
         "spatie/laravel-package-tools": "^1.14.0",
-        "illuminate/contracts": "^11.0|^10.0|^9.0"
+        "illuminate/contracts": "^12.0|^11.0|^10.0|^9.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
