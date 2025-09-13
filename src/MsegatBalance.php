@@ -28,7 +28,7 @@ class MsegatBalance extends Msegat
     public function balance()
     {
         $this->setRequest();
-        $this->response = $this->client->post("/".$this->end_point, $this->request);
-        return $this->response;
+        $this->response = $this->client->get("/".$this->end_point, $this->request);
+        return $this->response->json();
     }
 }

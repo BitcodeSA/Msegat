@@ -2,6 +2,10 @@
 
 ### Version 2.1.0
 
+- update method to get balance.
+
+### Version 2.1.0
+
 - add message model to log message send.
 - you can link message with any notifiable model to get its messages.
 
